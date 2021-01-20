@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'com.bingo.fy'
+version '5.2.13.BUILD-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    //spring核心依赖,spring-context,依赖本地的jar,project:表示的是本地项目的依赖;
+    compile(project(":spring-context"))
+
+}
+
+test {
+    useJUnitPlatform()
+}
