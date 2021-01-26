@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'com.bingo.fy'
+version '5.2.13.BUILD-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    compile(project(":spring-context"))
+    compile(project(":spring-beans"))
+    compile(project(":spring-core"))
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
+}
+
+test {
+    useJUnitPlatform()
+}

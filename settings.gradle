@@ -37,4 +37,5 @@ rootProject.children.each {project ->
 	project.buildFileName = "${project.name}.gradle"
 }
 include 'learnspring01'
+include 'learnspringaop02'
 
