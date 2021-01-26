@@ -3,10 +3,10 @@ package com.bingo.fy.aop;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-
-@Order(1)
+@Component
 @Aspect
 public class LogAspect {
 	/**
@@ -23,23 +23,23 @@ public class LogAspect {
 				" "+ Arrays.toString(joinPoint.getArgs()));
 	}
 
-	@AfterReturning(returning = "object",pointcut = "pointCut()")
-	public void logReturn(Object object)
-	{
-		System.out.println("logReturn: " + object);
-	}
-
-	@After("pointCut()")
-	public void logEnd(JoinPoint joinPoint) {
-		System.out.println("logEnd: "+joinPoint.getSignature().getName()+
-				" "+Arrays.toString(joinPoint.getArgs()));
-	}
-
-	@AfterThrowing(pointcut = "pointCut()",throwing = "e")
-	public void logException(Exception e)
-	{
-		System.out.println("logException: " + e);
-	}
+//	@AfterReturning(returning = "object",pointcut = "pointCut()")
+//	public void logReturn(Object object)
+//	{
+//		System.out.println("logReturn: " + object);
+//	}
+//
+//	@After("pointCut()")
+//	public void logEnd(JoinPoint joinPoint) {
+//		System.out.println("logEnd: "+joinPoint.getSignature().getName()+
+//				" "+Arrays.toString(joinPoint.getArgs()));
+//	}
+//
+//	@AfterThrowing(pointcut = "pointCut()",throwing = "e")
+//	public void logException(Exception e)
+//	{
+//		System.out.println("logException: " + e);
+//	}
 
 
 }

@@ -7,14 +7,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class SpringAopTest {
 	public static void main(String[] args) throws Exception
 	{
-		String data = "abcdefgh";
-
-		IService srv = new ServiceImpl();
-		System.out.println("Ori result:" + srv.doService(data));
-		System.out.println("----------");
-
+		String data = "abc";
 		ApplicationContext atc = new AnnotationConfigApplicationContext(IocManager.class);
-		srv = atc.getBean(IService.class);
+		IService srv = atc.getBean(IService.class);
 		System.out.println("Aspect result:" + srv.doService(data));
 
 	}

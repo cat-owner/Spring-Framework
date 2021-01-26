@@ -5,13 +5,14 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 /**
  * 服务接口参数预处理切面类;
  * @Author: wyc
  * @Date 2021/1/26 14:58
  */
-@Order(2)
+@Component
 @Aspect
 public class PreProcAspect {
 
