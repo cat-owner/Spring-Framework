@@ -8,8 +8,11 @@ public class SpringAopTest {
 	public static void main(String[] args) throws Exception
 	{
 		String data = "abc";
-		ApplicationContext atc = new AnnotationConfigApplicationContext(IocManager.class);
-		IService srv = atc.getBean(IService.class);
+		AnnotationConfigApplicationContext atc = new AnnotationConfigApplicationContext(IocManager.class);
+		//相当于从map中获取的值(singletonObjects是一个ConcurrentHashMap)
+		IService srv =(IService) atc.getBean("c");
+		//其实拿不到这个ServiceImpl.class这个类;
+		//IService srv =(IService) atc.getBean(ServiceImpl.class);
 		System.out.println("Aspect result:" + srv.doService(data));
 
 	}

@@ -1,6 +1,7 @@
 package com.bingo.fy.service.impl;
 
 import com.bingo.fy.service.IService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
  * @Author: wyc
  * @Date 2021/1/25 17:46
  */
-@Service
+@Component("c")
 public class ServiceImpl implements IService {
 	@Override
 	public String doService(String data) throws Exception {

@@ -84,6 +84,10 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * {@link Configuration @Configuration} classes
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
+		/**
+		 * 如果他有父类会先调用父类的构造方法，让后再调用自己的构造方法
+		 * 在自己的构造方法中初始化一个读取器和扫描器;
+		 */
 		this();
 		register(componentClasses);
 		refresh();
