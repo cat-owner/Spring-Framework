@@ -75,6 +75,9 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 
 
 	/** Cache of singleton objects: bean name to bean instance. */
+	/**
+	 * spring中单例池
+	 */
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
 	/** Cache of singleton factories: bean name to ObjectFactory. */
@@ -231,6 +234,10 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					this.suppressedExceptions = new LinkedHashSet<>();
 				}
 				try {
+					/**
+					 * 这里的singletonFactory.getObject会真正的创建bean对象;
+					 *
+					 */
 					singletonObject = singletonFactory.getObject();
 					newSingleton = true;
 				}

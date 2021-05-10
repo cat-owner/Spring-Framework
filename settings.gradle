@@ -38,4 +38,6 @@ rootProject.children.each {project ->
 }
 include 'learnspring01'
 include 'learnspringaop02'
+include 'bingo-mvc'
+include 'learnspringbeanDefinition'
 

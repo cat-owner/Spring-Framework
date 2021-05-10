@@ -151,7 +151,6 @@ public class CommonAnnotationBeanPostProcessor extends InitDestroyAnnotationBean
 
 	@Nullable
 	private static final Class<? extends Annotation> ejbClass;
-
 	private static final Set<Class<? extends Annotation>> resourceAnnotationTypes = new LinkedHashSet<>(4);
 
 	static {

@@ -89,6 +89,9 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		 * 在自己的构造方法中初始化一个读取器和扫描器;
 		 */
 		this();
+		/**
+		 *  本质就是：this.beanDefinitionMap.put(beanName, beanDefinition);
+		 */
 		register(componentClasses);
 		refresh();
 	}

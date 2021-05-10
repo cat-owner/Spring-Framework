@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
  */
 @Component("c")
 public class ServiceImpl implements IService {
+
+	public ServiceImpl(){
+		System.out.println("------------start initialization----------");
+	}
 	@Override
 	public String doService(String data) throws Exception {
 		{

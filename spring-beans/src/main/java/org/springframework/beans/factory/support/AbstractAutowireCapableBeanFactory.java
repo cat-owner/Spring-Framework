@@ -480,6 +480,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		if (logger.isTraceEnabled()) {
 			logger.trace("Creating instance of bean '" + beanName + "'");
 		}
+		//相当于一个Class类;
 		RootBeanDefinition mbdToUse = mbd;
 
 		// Make sure bean class is actually resolved at this point, and
@@ -490,7 +491,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			mbdToUse = new RootBeanDefinition(mbd);
 			mbdToUse.setBeanClass(resolvedClass);
 		}
-
+        //处理lookup-method 和replace-method配置;
 		// Prepare method overrides.
 		try {
 			mbdToUse.prepareMethodOverrides();
@@ -513,6 +514,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		try {
+			//调用doCreateBean创建bean;
 			Object beanInstance = doCreateBean(beanName, mbdToUse, args);
 			if (logger.isTraceEnabled()) {
 				logger.trace("Finished creating instance of bean '" + beanName + "'");
@@ -553,6 +555,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
+			//创建原生的targetObject;
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
 		Object bean = instanceWrapper.getWrappedInstance();
@@ -565,6 +568,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		synchronized (mbd.postProcessingLock) {
 			if (!mbd.postProcessed) {
 				try {
+					//第三次执行后置处理器;
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
 				catch (Throwable ex) {
@@ -591,6 +595,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		Object exposedObject = bean;
 		try {
 			populateBean(beanName, mbd, instanceWrapper);
+			//在这里targetObject--->proxyObject
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
 		catch (Throwable ex) {
