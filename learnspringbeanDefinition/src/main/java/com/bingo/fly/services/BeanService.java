@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
  * @Author: wyc
  * @Date 2021/5/10 14:03
  */
-//@Component
+@Component
 public class BeanService {
 	String name;
 	int age;

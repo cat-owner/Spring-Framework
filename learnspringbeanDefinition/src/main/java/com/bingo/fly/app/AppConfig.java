@@ -11,6 +11,5 @@ import org.springframework.context.annotation.ImportResource;
  */
 @Configuration
 @ComponentScan("com.bingo.fly")
-@ImportResource("classpath:spring.xml")
 public class AppConfig {
 }
