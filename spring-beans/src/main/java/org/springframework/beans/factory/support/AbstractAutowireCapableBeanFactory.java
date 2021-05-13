@@ -555,9 +555,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
+			//在这里完成了推断构造并且实例化了对象;
 			//创建原生的targetObject;
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
+		//这里其实可以看到bean还没有注入属性;
 		Object bean = instanceWrapper.getWrappedInstance();
 		Class<?> beanType = instanceWrapper.getWrappedClass();
 		if (beanType != NullBean.class) {
@@ -568,7 +570,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		synchronized (mbd.postProcessingLock) {
 			if (!mbd.postProcessed) {
 				try {
-					//第三次执行后置处理器;
+					//第三次执行后置处理器,处理合并后的beanDefinnition;
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
 				catch (Throwable ex) {
