@@ -156,9 +156,19 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 */
 	protected void addSingletonFactory(String beanName, ObjectFactory<?> singletonFactory) {
 		Assert.notNull(singletonFactory, "Singleton factory must not be null");
+		//singletonObjects 一级map;
 		synchronized (this.singletonObjects) {
+			//如果单例池中不存在才会add
+			//如果bean存在单例池中其实已经算是一个完整的bean了；
+			//一个完整的bean，自然而然的完成了属性的注入，循环依赖已经依赖上了
+			//如果这个对象已经是一个完整的bean,就不需要进入if；
 			if (!this.singletonObjects.containsKey(beanName)) {
+				//把工厂对象put到二级map--singletonFactories
 				this.singletonFactories.put(beanName, singletonFactory);
+				//从三级map中remove掉当前的bean
+				//为什么要remove？抛开很多细节，这三个map当中其实都存的是同一个对象
+				//spring的做法是三个不能同时都存，假如1存了，则2，3都要remove
+				//现在既然put到了2级缓存，1已经判断没有了，那么3则直接remove;
 				this.earlySingletonObjects.remove(beanName);
 				this.registeredSingletons.add(beanName);
 			}
@@ -217,8 +227,11 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 		Assert.notNull(beanName, "Bean name must not be null");
 		synchronized (this.singletonObjects) {
+			//singletonObjects就是所谓的单例池，也就是一个map;
 			Object singletonObject = this.singletonObjects.get(beanName);
+			//因为在创建，所以singletonObject肯定为null，故而条件成立;
 			if (singletonObject == null) {
+				//判断是否正在销毁;多线程中会出现；
 				if (this.singletonsCurrentlyInDestruction) {
 					throw new BeanCreationNotAllowedException(beanName,
 							"Singleton bean creation not allowed while singletons of this factory are in destruction " +

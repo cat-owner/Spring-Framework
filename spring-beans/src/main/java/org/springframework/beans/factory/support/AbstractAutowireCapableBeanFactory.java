@@ -555,8 +555,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
-			//在这里完成了推断构造并且实例化了对象;
+			//在这里完成了推断构造并且实例化了对象,构造方法里面的日志打印了出来;
 			//创建原生的targetObject;
+			//这个方法仅仅是完成了对象的创建;
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
 		//这里其实可以看到bean还没有注入属性;
@@ -584,6 +585,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// Eagerly cache singletons to be able to resolve circular references
 		// even when triggered by lifecycle interfaces like BeanFactoryAware.
 		//判断是否支持循环依赖，默认是true;
+		//通过作者的注解我们可以可以这里缓存一个对象去解决循环依赖的问题;
+		/**
+		 * mbd.isSingleton():判断当前的实例化的bean是否为单例;再次说明一下原型是不支持循环依赖的；
+		 * 因为如果是原型这里就会返回false;
+		 * this.allowCircularReferences默认情况下是false;
+		 * 判断当前正在创建的bean是否在正在创建的bean集合中；这里前面已经解释了，返回true;
+		 */
 		boolean earlySingletonExposure = (mbd.isSingleton() && this.allowCircularReferences &&
 				isSingletonCurrentlyInCreation(beanName));
 		//如果支持循环依赖，则提前暴露一个工厂;
@@ -601,6 +609,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			//判断属性是否需要属性注入,继而完成属性注入
 			populateBean(beanName, mbd, instanceWrapper);
 			//在这里targetObject--->proxyObject
+			//这个方法主要的作用是执行各种生命周期回调方法以及aop方法;
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
 		catch (Throwable ex) {
@@ -1207,9 +1216,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// Candidate constructors for autowiring?
+		//如果是自动装配，则推断出各种候选的构造方法;
 		Constructor<?>[] ctors = determineConstructorsFromBeanPostProcessors(beanClass, beanName);
 		if (ctors != null || mbd.getResolvedAutowireMode() == AUTOWIRE_CONSTRUCTOR ||
 				mbd.hasConstructorArgumentValues() || !ObjectUtils.isEmpty(args)) {
+			//利用推断出来的构造方法实例话对象;
 			return autowireConstructor(beanName, mbd, ctors, args);
 		}
 
@@ -1220,6 +1231,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// No special handling: simply use no-arg constructor.
+        //如果没有推断出构造方法，则使用默认的构造方法
 		return instantiateBean(beanName, mbd);
 	}
 
