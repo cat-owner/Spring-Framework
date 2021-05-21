@@ -531,7 +531,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				/**
 				 * 1:执行bean的工厂后置处理器工厂进行扫描
 				 * 2：解析BeanDefinition对象，并put到BeanDefinitionMap里面;
-				 * 3:再次执行Bean的后置处理器完成cglib的代理
 				 */
 				// Invoke factory processors registered as beans in the context.
 				invokeBeanFactoryPostProcessors(beanFactory);

@@ -503,6 +503,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		try {
 			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
+			//第一次调用后置处理器---aop
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
 				return bean;
@@ -558,6 +559,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			//在这里完成了推断构造并且实例化了对象,构造方法里面的日志打印了出来;
 			//创建原生的targetObject;
 			//这个方法仅仅是完成了对象的创建;
+			//第二次调用后置处理器实例化对象;
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
 		//这里其实可以看到bean还没有注入属性;
@@ -600,6 +602,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				logger.trace("Eagerly caching bean '" + beanName +
 						"' to allow for resolving potential circular references");
 			}
+			//第四次调用后置处理器,判断是否需要aop;
+			//提前暴露工厂，而不是对象;
 			addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
 		}
 
@@ -607,6 +611,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		Object exposedObject = bean;
 		try {
 			//判断属性是否需要属性注入,继而完成属性注入
+			//里面会完成第五次和第六次后置处理器的调用;
 			populateBean(beanName, mbd, instanceWrapper);
 			//在这里targetObject--->proxyObject
 			//这个方法主要的作用是执行各种生命周期回调方法以及aop方法;
