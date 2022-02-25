@@ -523,6 +523,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			//beanFactory的准备工作,对各种属性进行填充
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -531,6 +532,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				/**
 				 * 1:执行bean的工厂后置处理器工厂进行扫描
 				 * 2：解析BeanDefinition对象，并put到BeanDefinitionMap里面;
+				 * 3：调用各种beanFactory处理器;
 				 */
 				// Invoke factory processors registered as beans in the context.
 				invokeBeanFactoryPostProcessors(beanFactory);
